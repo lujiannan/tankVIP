@@ -6,7 +6,7 @@ import java.awt.event.WindowEvent;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 //        Frame f =  new Frame();
 //
 //        // 设置窗口属性
@@ -24,5 +24,9 @@ public class Main {
 //            }
 //        });
         Frame f = new TankFrame();
+        while (true) {
+            Thread.sleep(50);
+            f.repaint();
+        }
     }
 }

@@ -38,7 +38,7 @@ public class TankFrame extends Frame {
 
         // 让方块动起来
         x += 10;
-        y += 10;
+//        y += 10;
     }
 
     class MyKeyListener extends KeyAdapter {
@@ -46,8 +46,10 @@ public class TankFrame extends Frame {
         public void keyPressed(KeyEvent e) {
             super.keyPressed(e);
             System.out.println("key pressed");
+            x += 30;
+//            repaint();
         }
- 
+
         @Override
         public void keyReleased(KeyEvent e) {
             super.keyReleased(e);
