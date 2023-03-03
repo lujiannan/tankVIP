@@ -10,6 +10,9 @@ public class TankFrame extends Frame {
 
     int x = 200, y = 200;
 
+    Dir dir = Dir.DOWN;
+    private static final int SPEED = 10;
+
     public TankFrame() throws HeadlessException {
         // 设置窗口属性
         this.setSize(800,600);
@@ -38,6 +41,21 @@ public class TankFrame extends Frame {
 
         // 让方块动起来
 //        x += 10;
+
+        switch (dir) {
+            case LEFT:
+                x -= SPEED;
+                break;
+            case RIGHT:
+                x += SPEED;
+                break;
+            case UP:
+                y -= SPEED;
+                break;
+            case DOWN:
+                y += SPEED;
+                break;
+        }
     }
 
     class MyKeyListener extends KeyAdapter {
@@ -67,6 +85,8 @@ public class TankFrame extends Frame {
                 default:
                     break;
             }
+
+            setMainTankDir();
         }
 
         @Override
@@ -89,6 +109,15 @@ public class TankFrame extends Frame {
                 default:
                     break;
             }
+
+            setMainTankDir();
+        }
+
+        private void setMainTankDir() {
+            if (bl) dir = Dir.LEFT;
+            if (br) dir = Dir.RIGHT;
+            if (bu) dir = Dir.UP;
+            if (bd) dir = Dir.DOWN;
         }
     }
 }
