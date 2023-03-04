@@ -9,6 +9,7 @@ import java.awt.event.WindowEvent;
 public class TankFrame extends Frame {
 
     Tank myTank = new Tank(200, 200, Dir.DOWN);
+    Bullet b = new Bullet(200,200, Dir.DOWN);
 
     public TankFrame() throws HeadlessException {
         // 设置窗口属性
@@ -35,6 +36,7 @@ public class TankFrame extends Frame {
         super.paint(g);
 
         myTank.paint(g);
+        b.paint(g);
     }
 
     class MyKeyListener extends KeyAdapter {
