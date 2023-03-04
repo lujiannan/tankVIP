@@ -8,10 +8,7 @@ import java.awt.event.WindowEvent;
 
 public class TankFrame extends Frame {
 
-    int x = 200, y = 200;
-
-    Dir dir = Dir.DOWN;
-    private static final int SPEED = 10;
+    Tank myTank = new Tank(200, 200, Dir.DOWN);
 
     public TankFrame() throws HeadlessException {
         // 设置窗口属性
@@ -36,26 +33,8 @@ public class TankFrame extends Frame {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        System.out.println("paint");
-        g.fillRect(x, y, 50, 50);
 
-        // 让方块动起来
-//        x += 10;
-
-        switch (dir) {
-            case LEFT:
-                x -= SPEED;
-                break;
-            case RIGHT:
-                x += SPEED;
-                break;
-            case UP:
-                y -= SPEED;
-                break;
-            case DOWN:
-                y += SPEED;
-                break;
-        }
+        myTank.paint(g);
     }
 
     class MyKeyListener extends KeyAdapter {
@@ -114,10 +93,10 @@ public class TankFrame extends Frame {
         }
 
         private void setMainTankDir() {
-            if (bl) dir = Dir.LEFT;
-            if (br) dir = Dir.RIGHT;
-            if (bu) dir = Dir.UP;
-            if (bd) dir = Dir.DOWN;
+            if (bl) myTank.setDir(Dir.LEFT);
+            if (br) myTank.setDir(Dir.RIGHT);
+            if (bu) myTank.setDir(Dir.UP);
+            if (bd) myTank.setDir(Dir.DOWN);
         }
     }
 }
