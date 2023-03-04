@@ -93,10 +93,14 @@ public class TankFrame extends Frame {
         }
 
         private void setMainTankDir() {
+            myTank.setMoving(true);
+
             if (bl) myTank.setDir(Dir.LEFT);
             if (br) myTank.setDir(Dir.RIGHT);
             if (bu) myTank.setDir(Dir.UP);
             if (bd) myTank.setDir(Dir.DOWN);
+
+            if (!bl && !br && !bu && !bd) myTank.setMoving(false);
         }
     }
 }
