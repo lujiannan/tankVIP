@@ -8,12 +8,13 @@ import java.awt.event.WindowEvent;
 
 public class TankFrame extends Frame {
 
-    Tank myTank = new Tank(200, 200, Dir.DOWN);
+    Tank myTank = new Tank(200, 200, Dir.DOWN, this);
     Bullet b = new Bullet(200,200, Dir.DOWN);
+    private static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
 
     public TankFrame() throws HeadlessException {
         // 设置窗口属性
-        this.setSize(800,600);
+        this.setSize(GAME_WIDTH,GAME_HEIGHT);
         this.setResizable(false);
         this.setTitle("Tank War");
         this.setVisible(true);
@@ -29,6 +30,22 @@ public class TankFrame extends Frame {
 
         // 键盘监听 - 刷新界面
         this.addKeyListener(new MyKeyListener());
+    }
+
+    // 解决子弹闪烁 - 双缓冲
+    Image offScreenImage = null;
+    @Override
+    public void update(Graphics g){
+        if (offScreenImage == null){
+            offScreenImage = this.createImage(GAME_WIDTH, GAME_HEIGHT);
+        }
+        Graphics gOffScreen = offScreenImage.getGraphics();
+        Color c = gOffScreen.getColor();
+        gOffScreen.setColor(Color.BLACK);
+        gOffScreen.fillRect(0,0, GAME_WIDTH, GAME_HEIGHT);
+        gOffScreen.setColor(c);
+        paint(gOffScreen);
+        g.drawImage(offScreenImage,0,0,null);
     }
 
     @Override
@@ -86,6 +103,9 @@ public class TankFrame extends Frame {
                     break;
                 case KeyEvent.VK_DOWN:
                     bd = false;
+                    break;
+                case KeyEvent.VK_CONTROL:
+                    myTank.fire();
                     break;
                 default:
                     break;
