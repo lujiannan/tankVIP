@@ -6,6 +6,7 @@ public class Tank {
     private int x, y;
     private Dir dir = Dir.DOWN;
     private static final int SPEED = 5;
+    private static final int WIDTH = 50, HEIGHT = 50;
 
     private boolean moving = false;
 
@@ -38,7 +39,7 @@ public class Tank {
 //        System.out.println("paint");
         Color c = g.getColor();
         g.setColor(Color.YELLOW);
-        g.fillRect(x, y, 50, 50);
+        g.fillRect(x, y, WIDTH, HEIGHT);
         g.setColor(c);
 
         move();
@@ -63,6 +64,6 @@ public class Tank {
     }
 
     public void fire() {
-        tf.b = new Bullet(this.x, this.y, this.dir);
+        tf.bullets.add(new Bullet(this.x + WIDTH/2 - Bullet.getWIDTH()/2, this.y + HEIGHT/2 - Bullet.getHEIGHT()/2, this.dir, tf));
     }
 }
