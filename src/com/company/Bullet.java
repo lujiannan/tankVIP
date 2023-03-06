@@ -33,10 +33,11 @@ public class Bullet {
             tf.bullets.remove(this);
         }
 //        System.out.println("paint");
-        Color c = g.getColor();
-        g.setColor(Color.RED);
-        g.fillOval(x, y, WIDTH, HEIGHT);
-        g.setColor(c);
+//        Color c = g.getColor();
+//        g.setColor(Color.RED);
+//        g.fillOval(x, y, WIDTH, HEIGHT);
+//        g.setColor(c);
+        
         move();
     }
 
