@@ -10,14 +10,17 @@ public class Bullet {
     private int x, y;
     private Dir dir;
     private TankFrame tf;
+    private Rectangle bulletArea = new Rectangle();
 
     private boolean live = true;
+    private Group group = Group.BAD;
 
-    public Bullet(int x, int y, Dir dir, TankFrame tf) {
+    public Bullet(int x, int y, Dir dir, TankFrame tf, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.tf = tf;
+        this.group = group;
     }
 
     public Dir getDir() {
@@ -62,6 +65,11 @@ public class Bullet {
         return HEIGHT;
     }
 
+    public Rectangle getBulletArea(){
+        bulletArea.setBounds(this.x, this.y, WIDTH, HEIGHT);
+        return bulletArea;
+    }
+
     private void move() {
         switch (dir) {
             case LEFT:
@@ -82,10 +90,12 @@ public class Bullet {
     }
 
     public void collideWith(Tank tank) {
-        Rectangle rect_b = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
-        Rectangle rect_t = new Rectangle(tank.getX(), tank.getY(), Tank.getWIDTH(), tank.getHEIGHT());
+        if (this.group.equals(tank.getGroup())) return;
 
-        if (rect_b.intersects(rect_t)){
+//        Rectangle rect_b = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
+//        Rectangle rect_t = new Rectangle(tank.getX(), tank.getY(), Tank.getWIDTH(), tank.getHEIGHT());
+
+        if (this.getBulletArea().intersects(tank.getTankArea())){
             this.die();
             tank.die();
         }

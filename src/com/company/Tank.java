@@ -1,23 +1,29 @@
 package com.company;
 
 import java.awt.*;
+import java.util.Random;
 
 public class Tank {
     private int x, y;
     private Dir dir = Dir.DOWN;
     private static final int SPEED = 5;
     private static final int WIDTH = ResourceMgr.tankD.getWidth(), HEIGHT = ResourceMgr.tankD.getHeight();
+    private Rectangle tankArea = new Rectangle();
 
-    private boolean moving = false;
+    private Random random = new Random();
+
+    private boolean moving = true;
     private boolean live = true;
+    private Group group = Group.BAD;
 
     private TankFrame tf;
 
-    public Tank(int x, int y, Dir dir, TankFrame tf) {
+    public Tank(int x, int y, Dir dir, TankFrame tf, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.tf = tf;
+        this.group = group;
     }
 
     public Dir getDir() {
@@ -42,6 +48,15 @@ public class Tank {
 
     public static int getHEIGHT() {
         return HEIGHT;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public Rectangle getTankArea(){
+        tankArea.setBounds(this.x, this.y, WIDTH, HEIGHT);
+        return tankArea;
     }
 
     public boolean isMoving() {
@@ -90,12 +105,14 @@ public class Tank {
                 y += SPEED;
                 break;
         }
+
+        if (random.nextInt(10) > 8) this.fire();
     }
 
     public void fire() {
         int bulletX = this.x + WIDTH/2 - Bullet.getWIDTH()/2;
         int bulletY = this.y + HEIGHT/2 - Bullet.getHEIGHT()/2;
-        tf.bullets.add(new Bullet(bulletX, bulletY, this.dir, tf));
+        tf.bullets.add(new Bullet(bulletX, bulletY, this.dir, tf, group));
     }
 
     public void die() {
