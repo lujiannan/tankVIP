@@ -6,7 +6,7 @@ public class Tank {
     private int x, y;
     private Dir dir = Dir.DOWN;
     private static final int SPEED = 5;
-    private static final int WIDTH = 50, HEIGHT = 50;
+    private static final int WIDTH = ResourceMgr.tankD.getWidth(), HEIGHT = ResourceMgr.tankD.getHeight();
 
     private boolean moving = false;
 
@@ -73,6 +73,8 @@ public class Tank {
     }
 
     public void fire() {
-        tf.bullets.add(new Bullet(this.x + WIDTH/2 - Bullet.getWIDTH()/2, this.y + HEIGHT/2 - Bullet.getHEIGHT()/2, this.dir, tf));
+        int bulletX = this.x + WIDTH/2 - Bullet.getWIDTH()/2;
+        int bulletY = this.y + HEIGHT/2 - Bullet.getHEIGHT()/2;
+        tf.bullets.add(new Bullet(bulletX, bulletY, this.dir, tf));
     }
 }
