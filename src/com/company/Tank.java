@@ -77,6 +77,9 @@ public class Tank {
         if (!live) {
             tf.tanks.remove(this);
         }
+        if (group == Group.BAD) {
+            moving = true;
+        }
         switch (dir) {
             case LEFT:
                 g.drawImage(ResourceMgr.tankL, x, y, null);
@@ -95,7 +98,12 @@ public class Tank {
     }
 
     private void move() {
+        if (random.nextInt(100) > 93 && this.group == Group.BAD) randomDir();
+
         if (!moving) return;
+
+        if (random.nextInt(100) > 95 && this.group == Group.BAD) this.fire();
+
         switch (dir) {
             case LEFT:
                 if (x <= 0) return;
@@ -106,7 +114,7 @@ public class Tank {
                 x += SPEED;
                 break;
             case UP:
-                if (y <= 0) return;
+                if (y <= 40) return;
                 y -= SPEED;
                 break;
             case DOWN:
@@ -114,8 +122,10 @@ public class Tank {
                 y += SPEED;
                 break;
         }
+    }
 
-        if (random.nextInt(10) > 8) this.fire();
+    private void randomDir() {
+        this.dir = Dir.values()[random.nextInt(4)];
     }
 
     public void fire() {

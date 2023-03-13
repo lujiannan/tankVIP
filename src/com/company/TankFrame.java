@@ -61,7 +61,7 @@ public class TankFrame extends Frame {
         g.setColor(Color.WHITE);
         g.drawString("bullets: " + bullets.size(), 20, 60);
         g.drawString("enemies: " + tanks.size(), 20, 80);
-//        g.drawString("explodes: " + explodes.size(), 20, 100);
+        g.drawString("explodes: " + explodes.size(), 20, 100);
         g.setColor(c);
 
         myTank.paint(g);
@@ -77,10 +77,6 @@ public class TankFrame extends Frame {
         for (int i = 0; i < bullets.size(); i++){
             for (int j = 0; j < tanks.size(); j++){
                 bullets.get(i).collideWith(tanks.get(j));
-                if (!tanks.get(j).isLive()) {
-                    Explode e = new Explode(tanks.get(j).getX(), tanks.get(j).getY(), this);
-                    explodes.add(e);
-                }
             }
         }
     }
