@@ -12,7 +12,8 @@ public class Tank {
 
     private Random random = new Random();
 
-    private boolean moving = true;
+//    private boolean moving = true;
+    private boolean moving = false;
     private boolean live = true;
     private Group group = Group.BAD;
 
@@ -54,6 +55,10 @@ public class Tank {
         return group;
     }
 
+    public boolean isLive() {
+        return live;
+    }
+
     public Rectangle getTankArea(){
         tankArea.setBounds(this.x, this.y, WIDTH, HEIGHT);
         return tankArea;
@@ -93,15 +98,19 @@ public class Tank {
         if (!moving) return;
         switch (dir) {
             case LEFT:
+                if (x <= 0) return;
                 x -= SPEED;
                 break;
             case RIGHT:
+                if (x >= TankFrame.GAME_WIDTH - WIDTH) return;
                 x += SPEED;
                 break;
             case UP:
+                if (y <= 0) return;
                 y -= SPEED;
                 break;
             case DOWN:
+                if (y >= TankFrame.GAME_HEIGHT - HEIGHT) return;
                 y += SPEED;
                 break;
         }
