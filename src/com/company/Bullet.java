@@ -98,7 +98,9 @@ public class Bullet {
         if (this.getBulletArea().intersects(tank.getTankArea())){
             this.die();
             tank.die();
-            tf.explodes.add(new Explode(tank.getX(), tank.getY(), tf));
+            int explodeX = tank.getX() + Tank.getWIDTH()/2 - Explode.getWIDTH()/2;
+            int explodeY = tank.getY() + Tank.getHEIGHT()/2 - Explode.getHEIGHT()/2;
+            tf.explodes.add(new Explode(explodeX, explodeY, tf));
         }
     }
 
