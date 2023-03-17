@@ -102,26 +102,33 @@ public class Tank {
 
         if (!moving) return;
 
-        if (random.nextInt(100) > 95 && this.group == Group.BAD) this.fire();
-
         switch (dir) {
             case LEFT:
-                if (x <= 0) return;
                 x -= SPEED;
                 break;
             case RIGHT:
-                if (x >= TankFrame.GAME_WIDTH - WIDTH) return;
                 x += SPEED;
                 break;
             case UP:
-                if (y <= 40) return;
                 y -= SPEED;
                 break;
             case DOWN:
-                if (y >= TankFrame.GAME_HEIGHT - HEIGHT) return;
                 y += SPEED;
                 break;
         }
+
+        if (random.nextInt(100) > 95 && this.group == Group.BAD
+                && x >= 0 && y >= 40 && x <= TankFrame.GAME_WIDTH - WIDTH && y <= TankFrame.GAME_HEIGHT - HEIGHT)
+            this.fire();
+
+        boundsCheck();
+    }
+
+    private void boundsCheck() {
+        if (this.x < 0) x = 0;
+        if (this.y < 40) y = 40;
+        if (this.x > TankFrame.GAME_WIDTH - WIDTH) x = TankFrame.GAME_WIDTH - WIDTH;
+        if (this.y > TankFrame.GAME_HEIGHT - HEIGHT) y = TankFrame.GAME_HEIGHT - HEIGHT;
     }
 
     private void randomDir() {
