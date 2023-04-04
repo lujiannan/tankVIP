@@ -18,6 +18,7 @@ public class Tank {
     private Group group = Group.BAD;
 
     private TankFrame tf;
+    private FireStrategy fs;
 
     public Tank(int x, int y, Dir dir, TankFrame tf, Group group) {
         this.x = x;
@@ -25,6 +26,24 @@ public class Tank {
         this.dir = dir;
         this.tf = tf;
         this.group = group;
+
+        if (this.group == Group.GOOD) {
+            try {
+                fs = (FireStrategy) Class.forName(PropertyMgr.get("goodFS")).newInstance();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                fs = (FireStrategy) Class.forName(PropertyMgr.get("badFS")).getDeclaredConstructor().newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public Dir getDir() {
@@ -53,6 +72,10 @@ public class Tank {
 
     public Group getGroup() {
         return group;
+    }
+
+    public TankFrame getTf() {
+        return tf;
     }
 
     public boolean isLive() {
@@ -118,8 +141,9 @@ public class Tank {
         }
 
         if (random.nextInt(100) > 95 && this.group == Group.BAD
-                && x >= 0 && y >= 40 && x <= TankFrame.GAME_WIDTH - WIDTH && y <= TankFrame.GAME_HEIGHT - HEIGHT)
+                && x >= 0 && y >= 40 && x <= TankFrame.GAME_WIDTH - WIDTH && y <= TankFrame.GAME_HEIGHT - HEIGHT) {
             this.fire();
+        }
 
         boundsCheck();
     }
@@ -136,9 +160,7 @@ public class Tank {
     }
 
     public void fire() {
-        int bulletX = this.x + WIDTH/2 - Bullet.getWIDTH()/2;
-        int bulletY = this.y + HEIGHT/2 - Bullet.getHEIGHT()/2;
-        tf.bullets.add(new Bullet(bulletX, bulletY, this.dir, tf, group));
+        fs.fire(this);
     }
 
     public void die() {

@@ -1,2 +1,5 @@
-# tanks count at initialization
+# tanks at initialization
 initTankCount=10
+# tank's fire strategy
+goodFS=com.company.FireStrategyFourDir
+badFS=com.company.FireStrategyDefault
